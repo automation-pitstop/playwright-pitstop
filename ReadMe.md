@@ -40,3 +40,6 @@ Load hirerchy is as below:
 3. Property file
 
 Also to override any property directly place that in VM arguments with -d.
+
+-------
+Run recorder : mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="codegen demo.playwright.dev/todomvc"
