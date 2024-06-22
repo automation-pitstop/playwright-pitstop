@@ -6,24 +6,25 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 import org.apache.commons.lang3.StringUtils;
 import org.nimit.core.BasePage;
+import org.nimit.core.CoreUtils;
 import org.nimit.core.WrongPageException;
 
-public class Homepage extends BasePage {
+public class HomePage extends BasePage {
 
-    private static Homepage instance = null;
+    private static HomePage instance = null;
 
-    public static Homepage getInstance(Playwright playwright, Browser browser, Page page, BrowserContext context){
+    public static HomePage getInstance(Playwright playwright, Browser browser, Page page, BrowserContext context){
         if(instance == null){
-            instance = new Homepage(playwright, browser, page, context);
+            instance = new HomePage(playwright, browser, page, context);
         }
         return instance;
     }
-    protected Homepage(Playwright playwright, Browser browser, Page page, BrowserContext context) {
+    protected HomePage(Playwright playwright, Browser browser, Page page, BrowserContext context) {
         super(playwright, browser, page, context);
     }
 
-    public Homepage launchUrl() {
-        page.navigate("https://bonigarcia.dev/selenium-webdriver-java/");
+    public HomePage launchUrl() {
+        page.navigate(CoreUtils.getOverriddenProperty("url"));
         if(!StringUtils.containsAnyIgnoreCase(page.url(),"selenium-webdriver-java")){
             throw new WrongPageException("ERROR : Incorrect URL is loaded, current url : "+ page.url());
         }else{

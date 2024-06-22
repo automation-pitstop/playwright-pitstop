@@ -4,7 +4,7 @@ import com.microsoft.playwright.*;
 import org.apache.commons.lang3.StringUtils;
 import org.nimit.core.ValueMissMatchException;
 
-public class WebFormPage extends Homepage{
+public class WebFormPage extends HomePage {
 
     private static WebFormPage instance = null;
 
@@ -32,8 +32,8 @@ public class WebFormPage extends Homepage{
         }
     }
 
-    public Homepage clickRetunToIndex() {
+    public HomePage clickRetunToIndex() {
         page.locator("//a[contains(text(),'Return to index')]").click();
-        return Homepage.getInstance(playwright,browser, page, context);
+        return HomePage.getInstance(playwright,browser, page, context);
     }
 }

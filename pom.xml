@@ -41,6 +41,24 @@
             <artifactId>commons-lang3</artifactId>
             <version>3.14.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.36</version>
+        </dependency>
+        <!-- Logback Classic (an implementation of SLF4J) -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.10</version>
+        </dependency>
+
+        <!-- Optional: Logback Core -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>1.2.10</version>
+        </dependency>
 
     </dependencies>
 
@@ -74,6 +92,13 @@
                     <include>**/*</include>
                 </includes>
             </resource>
+            <resource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>*.properties</include>
+                </includes>
+            </resource>
         </resources>
         <plugins>
             <plugin>
@@ -92,6 +117,7 @@
                 <version>${maven.surefire.version}</version>
                 <configuration>
                     <suiteXmlFiles>
+                        <!--suppress UnresolvedMavenProperty -->
                         <suiteXmlFile>${xmlFilePath}</suiteXmlFile>
 <!--                        mvn clean test -DxmlFilePath=testng.xml-->
 <!--                        <suiteXmlFile>testngRun.xml</suiteXmlFile>-->
