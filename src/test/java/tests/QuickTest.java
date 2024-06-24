@@ -1,41 +1,11 @@
-import com.microsoft.playwright.*;
+package tests;
+
 import org.testng.annotations.*;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.AssertJUnit.assertTrue;
 
-public class TestNgTest extends TestBase {
-//    // Shared between all tests in this class.
-//    static Playwright playwright;
-//    static Browser browser;
-
-//    // New instance for each test method.
-//    BrowserContext context;
-//    Page page;
-
-//    @BeforeClass
-//    static void launchBrowser() {
-//        playwright = Playwright.create();
-//        browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(false).setSlowMo(200));
-//    }
-//
-//    @AfterClass
-//    static void closeBrowser() {
-//        playwright.close();
-//    }
-
-//    @BeforeMethod
-//    void createContextAndPage() {
-//        context = browser.newContext();
-//        page = context.newPage();
-//    }
-//
-//    @AfterMethod
-//    void closeContext() {
-//        context.close();
-//    }
-
-
+public class QuickTest extends TestBase {
 
     @Test
     void shouldClickButton1() {

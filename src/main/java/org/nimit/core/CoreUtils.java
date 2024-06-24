@@ -7,8 +7,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import static java.lang.invoke.MethodHandles.lookup;
+
 public class CoreUtils {
-    private static final Logger logger = LoggerFactory.getLogger(CoreUtils.class);
+    private static final Logger logger = LoggerFactory.getLogger(lookup().lookupClass());
 
     public static Properties globalProperties = CoreUtils.loadGlobalProperties();
 

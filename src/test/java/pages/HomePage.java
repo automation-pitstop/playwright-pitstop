@@ -1,4 +1,4 @@
-package org.nimit.app;
+package pages;
 
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserContext;

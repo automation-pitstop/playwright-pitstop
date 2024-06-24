@@ -17,6 +17,7 @@
         <maven.surefire.version>3.2.5</maven.surefire.version>
         <playwright.version>1.44.0</playwright.version>
         <testng.version>7.9.0</testng.version>
+        <testNgXmlFilePath>testng.xml</testNgXmlFilePath>
     </properties>
 
     <dependencies>
@@ -29,7 +30,7 @@
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>${testng.version}</version>
-            <scope>test</scope>
+<!--            <scope>test</scope>-->
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
@@ -118,9 +119,9 @@
                 <configuration>
                     <suiteXmlFiles>
                         <!--suppress UnresolvedMavenProperty -->
-                        <suiteXmlFile>${xmlFilePath}</suiteXmlFile>
-<!--                        mvn clean test -DxmlFilePath=testng.xml-->
-<!--                        <suiteXmlFile>testngRun.xml</suiteXmlFile>-->
+                        <suiteXmlFile>${testNgXmlFilePath}</suiteXmlFile>
+<!--                        mvn clean test -DxmlFilePath=testng1.xml-->
+<!--                        <suiteXmlFile>testng.xml</suiteXmlFile>-->
                     </suiteXmlFiles>
                 </configuration>
             </plugin>

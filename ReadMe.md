@@ -1,5 +1,6 @@
 Command to run the TestNG test
-mvn clean test -DxmlFilePath=testng.xml
+mvn clean test ==> default test will run from testng.xml
+mvn clean test -DtestNgXmlFilePath=testngNew.xml (to override the testng.xml) 
 
 ----------------
 Tracing code:
@@ -42,4 +43,11 @@ Load hirerchy is as below:
 Also to override any property directly place that in VM arguments with -d.
 
 -------
-Run recorder : mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="codegen demo.playwright.dev/todomvc"
+Run recorder : mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="codegen https://bonigarcia.dev/selenium-webdriver-java/"
+
+-----
+Adding logger:
+static final Logger logger = LoggerFactory.getLogger(lookup().lookupClass());
+
+Changing the log level from mvn command line :
+mvn clean install -Dlog.level=DEBUG
