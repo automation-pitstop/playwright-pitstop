@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 
 import java.nio.file.Paths;
 
-public class TracingTest extends TestBase{
+public class TracingTest extends TestBase {
 
     @Test
     void startTracing(){

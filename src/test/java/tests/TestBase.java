@@ -1,6 +1,8 @@
 package tests;
 
 import com.microsoft.playwright.*;
+import org.apache.commons.lang3.StringUtils;
+import org.nimit.core.CoreUtils;
 import org.nimit.core.TestListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,32 +17,41 @@ public class TestBase {
     public static Browser browser;
 
     //New instance for each test method.
-    protected BrowserContext context;
-    protected Page page;
+    public BrowserContext context;
+    public Page page;
+
+    @BeforeSuite
+    static void prepareTestEnv(){
+        logger.info("Before Suite called : Preparing the test env");
+
+    }
 
     @BeforeClass
     static void launchBrowser() {
-        logger.info("Creating the Playwright object");
+        logger.info("Before Class called : Creating the Playwright object");
         playwright = Playwright.create();
         browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(false).setSlowMo(200));
     }
 
     @AfterClass
     static void closeBrowser() {
-        logger.info("Closing the browser");
+        logger.info("After Class called : Closing the browser");
         playwright.close();
     }
 
     @BeforeMethod
     void createContextAndPage() {
-        logger.info("Creating context and page object");
+        logger.info("Before Method called : Creating context and page object");
         context = browser.newContext();
         page = context.newPage();
+        if( StringUtils.isNotBlank(CoreUtils.getOverriddenProperty("default.timeout"))){
+            page.setDefaultTimeout(Double.parseDouble(CoreUtils.getOverriddenProperty("default.timeout")));
+        }
     }
 
     @AfterMethod
     void closeContext() {
-        logger.info("Closing the context");
+        logger.info("After Method called : Closing the context");
         context.close();
     }
 }

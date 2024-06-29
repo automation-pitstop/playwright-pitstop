@@ -1,14 +1,17 @@
-Command to run the TestNG test
-mvn clean test ==> default test will run from testng.xml
-mvn clean test -DtestNgXmlFilePath=testngNew.xml (to override the testng.xml) 
+### Command to run the TestNG test
+* ````mvn clean test```` ==> default test will run from testng.xml
+* ````mvn clean test -DtestNgXmlFilePath=testngNew.xml```` (to override the testng.xml) 
 
 ----------------
-Tracing code:
+
+#### Tracing code:
+
+```
 try (Playwright playwright = Playwright.create()) {
     Browser browser = playwright.chromium().launch();
     BrowserContext context = browser.newContext();
 
-    // Start tracing before creating / navigating a page.
+    Start tracing before creating / navigating a page.
         context.tracing().start(new Tracing.StartOptions()
                     .setScreenshots(true)
                     .setSnapshots(true)
@@ -19,23 +22,25 @@ try (Playwright playwright = Playwright.create()) {
 
 			// Stop tracing and export it into a zip archive.
             context.tracing().stop(new Tracing.StopOptions()
-                    .setPath(Paths.get("trace.zip")));
-        }
-// Stop tracing and export it into a zip archive.
-context.tracing().stop(new Tracing.StopOptions()
-.setPath(Paths.get("trace.zip")));
-}
+             .setPath(Paths.get("trace.zip")));
+    }
+```
+
 --------------
-Opening the trace.zip file
+#### Opening the trace.zip file
+
+````
 mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="show-trace trace.zip"
----
+````
 
-default.properties ==> to hold all the default propeties
-This can be overridden by any properperty file. 
-For that provide -denv=<property_file_name>
-e.g. -devn=tst or -denv=prod
+#### Loading Properties
 
-Load hirerchy is as below:
+*default.properties* ==> Consist all the default properties
+This can be overridden by any property file. 
+For that provide _-denv=<property_file_name>_
+e.g. ```-devn=tst``` or ```-denv=prod```
+
+##### Load hierarchy is as below:
 1. VM args
 2. System env variables
 3. Property file
@@ -43,11 +48,15 @@ Load hirerchy is as below:
 Also to override any property directly place that in VM arguments with -d.
 
 -------
-Run recorder : mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="codegen https://bonigarcia.dev/selenium-webdriver-java/"
+#### Run recorder : 
+
+````mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="codegen https://bonigarcia.dev/selenium-webdriver-java/"````
 
 -----
-Adding logger:
-static final Logger logger = LoggerFactory.getLogger(lookup().lookupClass());
+
+#### Adding logger:
+
+````static final Logger logger = LoggerFactory.getLogger(lookup().lookupClass());````
 
 Changing the log level from mvn command line :
-mvn clean install -Dlog.level=DEBUG
+````mvn clean install -Dlog.level=DEBUG````

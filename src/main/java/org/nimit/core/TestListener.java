@@ -14,49 +14,49 @@ public class TestListener implements ITestListener{
     @Override
     public void onStart(ITestContext context) {
         ITestListener.super.onStart(context);
-        logger.debug("onStart {}", context.getName());
+        logger.debug("Listener On Start : ", context.getName());
     }
 
     @Override
     public void onTestStart(ITestResult result) {
         ITestListener.super.onTestStart(result);
-        logger.debug("onTestStart {}", result.getName());
+        logger.debug("Listener Test Start : ", result.getName());
     }
 
     @Override
     public void onTestSuccess(ITestResult result) {
         ITestListener.super.onTestSuccess(result);
-        logger.debug("onTestSuccess {}", result.getName());
+        logger.debug("Listener on test success : ", result.getName());
     }
 
     @Override
     public void onTestFailure(ITestResult result) {
         ITestListener.super.onTestFailure(result);
-        logger.debug("onTestFailure {}", result.getThrowable());
+        logger.debug("Listener onTestFailure : ", result.getThrowable());
     }
 
     @Override
     public void onTestSkipped(ITestResult result) {
         ITestListener.super.onTestSkipped(result);
-        logger.debug("onTestSkipped {}", result.getSkipCausedBy());
+        logger.debug("Listener onTestSkipped : ", result.getSkipCausedBy());
     }
 
     @Override
     public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
         ITestListener.super.onTestFailedButWithinSuccessPercentage(result);
-        logger.debug("onTestFailedButWithinSuccessPercentage {}",
+        logger.debug("Listener onTestFailedButWithinSuccessPercentage : ",
                 result.getThrowable());
     }
 
     @Override
     public void onTestFailedWithTimeout(ITestResult result) {
         ITestListener.super.onTestFailedWithTimeout(result);
-        logger.debug("onTestFailedWithTimeout {}", result.getThrowable());
+        logger.debug("Listener onTestFailedWithTimeout : ", result.getThrowable());
     }
 
     @Override
     public void onFinish(ITestContext context) {
         ITestListener.super.onFinish(context);
-        logger.debug("onFinish {}", context.getName());
+        logger.debug("Listener onFinish : ", context.getName());
     }
 }
