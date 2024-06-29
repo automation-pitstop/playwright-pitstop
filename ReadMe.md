@@ -1,6 +1,6 @@
 ### Command to run the TestNG test
 * ````mvn clean test```` ==> default test will run from testng.xml
-* ````mvn clean test -DtestNgXmlFilePath=testngNew.xml```` (to override the testng.xml) 
+* ````mvn clean test -DtestNgXmlFilePath=testng1.xml -Denv=tst```` (to override the testng.xml) 
 
 ----------------
 
@@ -38,7 +38,7 @@ mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="sh
 *default.properties* ==> Consist all the default properties
 This can be overridden by any property file. 
 For that provide _-denv=<property_file_name>_
-e.g. ```-devn=tst``` or ```-denv=prod```
+e.g. ```-Devn=tst``` or ```-Denv=prod```
 
 ##### Load hierarchy is as below:
 1. VM args

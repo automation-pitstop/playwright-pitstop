@@ -64,11 +64,30 @@ public class CoreUtils {
         return finalVal;
     }
 
+    public static String getOverriddenPropertyFromVMandEnv(String key) {
+        String finalVal = "";
+        // Check command-line arguments
+        if(System.getProperties().containsKey(key)){
+            logger.info(String.format("Property overridden using VM args, %s : %s",key,System.getProperty(key)));
+            return System.getProperty(key);
+        }
+
+        // Check environment variables
+        String envValue = System.getenv(key);
+        if (envValue != null) {
+            logger.info(String.format("Property overridden using env variables, %s : %s",key,envValue));
+            return envValue;
+        }
+
+        return finalVal;
+    }
+
     public static Properties loadGlobalProperties(){
         Properties defaultProperties = CoreUtils.readPropertyFile("default.properties");
         Properties envRelatedProperty;
-        if(System.getProperties().containsKey("env")){
-            String envVal = System.getProperty("env");
+        if(StringUtils.isNotBlank(getOverriddenPropertyFromVMandEnv("env"))){
+//        if(System.getProperties().containsKey("env")){
+            String envVal = getOverriddenPropertyFromVMandEnv("env");
             envRelatedProperty = CoreUtils.readPropertyFile(envVal + ".properties");
             defaultProperties.putAll(envRelatedProperty);
             return defaultProperties;
@@ -88,7 +107,7 @@ public class CoreUtils {
     }
 
     public static Map<String, Map<String, String>> loadCsvDataIntoMap(String csvFile) {
-        String env = globalProperties.getProperty("env");
+        String env = getOverriddenProperty("env");
         Map<String, Map<String, String>> dataMap = new HashMap<>();
 
         try (CSVReader reader = new CSVReader(new FileReader(csvFile))) {

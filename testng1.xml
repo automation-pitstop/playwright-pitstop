@@ -4,7 +4,7 @@
     <test name="Regression pack">
         <classes>
             <class name="tests.CommandTest"/>
-<!--            <class name="test.sample.ParameterTest"/>-->
+          <class name="tests.DataTest"/>
         </classes>
     </test>
 </suite>
