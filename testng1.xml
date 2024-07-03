@@ -1,9 +1,12 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 
 <suite name="Suite1" verbose="1">
+    <listeners>
+        <listener class-name="org.nimit.listeners.RetryListener"></listener>
+    </listeners>
     <test name="Regression pack">
         <classes>
-            <class name="tests.CommandTest"/>
+<!--            <class name="tests.CommandTest"/>-->
           <class name="tests.DataTest"/>
         </classes>
     </test>

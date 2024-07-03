@@ -3,14 +3,15 @@ package tests;
 import com.microsoft.playwright.*;
 import org.apache.commons.lang3.StringUtils;
 import org.nimit.core.CoreUtils;
-import org.nimit.core.TestListener;
+import org.nimit.listeners.RetryListener;
+import listeners.TestListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.*;
 
 import static java.lang.invoke.MethodHandles.lookup;
 
-@Listeners(TestListener.class)
+@Listeners({TestListener.class, RetryListener.class})
 public class TestBase {
     protected static final Logger logger = LoggerFactory.getLogger(lookup().lookupClass());
     public static Playwright playwright;
@@ -53,5 +54,9 @@ public class TestBase {
     void closeContext() {
         logger.info("After Method called : Closing the context");
         context.close();
+    }
+
+    public Page getPageObj(){
+        return page;
     }
 }

@@ -60,3 +60,9 @@ Also to override any property directly place that in VM arguments with -d.
 
 Changing the log level from mvn command line :
 ````mvn clean install -Dlog.level=DEBUG````
+
+#### To-Do list : 
+1. Make data sheet load once
+2. Add the default retry count in properties => done : retryCount
+3. Take screenshot after every method
+4. Take screenshot if fails

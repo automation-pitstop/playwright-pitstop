@@ -2,7 +2,7 @@ package tests;
 
 import org.testng.annotations.Test;
 
-public class MouseHoverTest extends TestBase{
+public class MouseHoverTest extends TestBase {
 
     @Test
     void moveMouse() throws InterruptedException {

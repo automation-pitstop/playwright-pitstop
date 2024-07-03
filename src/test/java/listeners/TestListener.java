@@ -1,12 +1,16 @@
-package org.nimit.core;
+package listeners;
 
 import static java.lang.invoke.MethodHandles.lookup;
 import static org.slf4j.LoggerFactory.getLogger;
 
+import com.microsoft.playwright.Page;
 import org.slf4j.Logger;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
+import tests.TestBase;
+
+import java.nio.file.Paths;
 
 public class TestListener implements ITestListener{
     static final Logger logger = getLogger(lookup().lookupClass());
@@ -32,6 +36,10 @@ public class TestListener implements ITestListener{
     @Override
     public void onTestFailure(ITestResult result) {
         ITestListener.super.onTestFailure(result);
+        Object testClass = result.getInstance();
+        ((TestBase) testClass).getPageObj()
+                .screenshot(new Page.ScreenshotOptions()
+                .setPath(Paths.get(result.getName()+".png")));
         logger.debug("Listener onTestFailure : ", result.getThrowable());
     }
 
@@ -59,4 +67,5 @@ public class TestListener implements ITestListener{
         ITestListener.super.onFinish(context);
         logger.debug("Listener onFinish : ", context.getName());
     }
+
 }
