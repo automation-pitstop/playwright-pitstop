@@ -7,10 +7,10 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
-import static org.nimit.core.CoreUtils.loadCsvDataIntoMap;
+import static org.nimit.core.CoreUtils.loadTestDataIntoMap;
 
 public class App {
-    public static void main(String[] args) throws InterruptedException{
+    public static void main(String[] args){
 //        try (Playwright playwright = Playwright.create()) {
 //            Browser browser = playwright.firefox().launch(new BrowserType.LaunchOptions().setHeadless(false).setSlowMo(50) );
 //            Page page = browser.newPage();
@@ -35,8 +35,7 @@ public class App {
 //            System.out.println("Done");
 //        }
 
-        String csvFile = "path/to/your/csvfile.csv";
-        Map<String, Map<String, String>> dataMap = loadCsvDataIntoMap("src/test/resources/testData.csv");
+        Map<String, Map<String, String>> dataMap = loadTestDataIntoMap("src/test/resources/data.csv");
 
         // Print the loaded map
         for (Map.Entry<String, Map<String, String>> entry : dataMap.entrySet()) {

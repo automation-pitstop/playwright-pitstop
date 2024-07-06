@@ -38,6 +38,15 @@ public class CoreUtils {
         return properties;
     }
 
+    /**
+     * Get the overridden key value, in below-mentioned sequence :
+     * 1. VM args
+     * 2. System environment variables
+     * 3. Property defined in property file
+     * 4. Empty string if no Key is found
+     * @param key Value from the property file to laod
+     * @return corresponding value assigned to key
+     */
     public static String getOverriddenProperty(String key) {
         String finalVal = "";
         // Check command-line arguments
@@ -106,11 +115,21 @@ public class CoreUtils {
         return defaultProperties;
     }
 
-    public static Map<String, Map<String, String>> loadCsvDataIntoMap(String csvFile) {
+    /**
+     * Load the environment based test data from CSV file
+     * NOTE : 'env' column is must in data file
+     * @param csvDataFilePath CSV date file path to be loaded
+     * @return data map
+     */
+    public static Map<String, Map<String, String>> loadTestDataIntoMap(String csvDataFilePath) {
         String env = getOverriddenProperty("env");
+        if(StringUtils.isBlank(env)){
+            throw new RuntimeException(String.format("ERROR : Data CSV can't be loaded as no 'env' is mentioned. DataCsvPath=%s",csvDataFilePath));
+        }
+        logger.info(String.format("Loading the data from data csv. Env=%s & DataCsvPath=%s",env,csvDataFilePath));
         Map<String, Map<String, String>> dataMap = new HashMap<>();
 
-        try (CSVReader reader = new CSVReader(new FileReader(csvFile))) {
+        try (CSVReader reader = new CSVReader(new FileReader(csvDataFilePath))) {
             List<String[]> lines = reader.readAll();
 
             if (lines.isEmpty()) {
@@ -132,12 +151,16 @@ public class CoreUtils {
                 String key = line[0];
                 Map<String, String> rowMap = new HashMap<>();
                 for (int j = 1; j < line.length; j++) {
-                    //                    rowMap.put(headers[j], line[j]);
-                    if(StringUtils.endsWithIgnoreCase(headers[j],env)){
-                        rowMap.put(StringUtils.removeEnd(headers[j],"_"+env), line[j]);
+                    if(StringUtils.equalsIgnoreCase(env,line[1])){
+                        rowMap.put(headers[j],line[j]);
+                    }
+                    else{
+                        break;
                     }
                 }
-                dataMap.put(key, rowMap);
+                if(rowMap.size()!=0){
+                    dataMap.put(key, rowMap);
+                }
             }
         } catch (IOException | CsvException e) {
             e.printStackTrace();

@@ -62,7 +62,11 @@ Changing the log level from mvn command line :
 ````mvn clean install -Dlog.level=DEBUG````
 
 #### To-Do list : 
-1. Make data sheet load once
+1. Make data sheet load once ==> done : Use loadTestDataIntoMap method in BeforeClass method to load the data
 2. Add the default retry count in properties => done : retryCount
 3. Take screenshot after every method
-4. Take screenshot if fails
+4. Take screenshot if fails ==> done : 
+
+#### Data loading
+Keep the data sheet csv in testData folder
+Note : Must add columns "TestId" and "env". 'env' column data is to keep environment specific data.
