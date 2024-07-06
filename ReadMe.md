@@ -44,6 +44,7 @@ e.g. ```-Devn=tst``` or ```-Denv=prod```
 TestBase class have overridden properties under **testProperties**
 
 #### Data loading
+
 Keep the data sheet csv in testData folder
 Note : Must add columns "TestId" and "env". 'env' column data is to keep environment specific data.
 ----
@@ -68,13 +69,13 @@ Also to override any property directly place that in VM arguments with -d.
 
 Changing the log level from mvn command line :
 ````mvn clean install -Dlog.level=DEBUG````
-
+-----
 #### Key points to remember
 1. All the properties data is stored **testProperties** which is extended to both test and base page.
 2. Currently, data is automatically loaded. So to load data use BeforeClass method and call **loadTestDataIntoMap** to fetch env specific data
 3. To rerun failed test case use this variable **retryCount**
 4. Framework takes screenshot if test fails
-
+-----
 #### To-Do list :
 1. Add reporting 
 2. Add browser capabilities, like run headless, maximized, browser size etc
