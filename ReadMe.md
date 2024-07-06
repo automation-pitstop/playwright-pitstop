@@ -26,13 +26,15 @@ try (Playwright playwright = Playwright.create()) {
     }
 ```
 
-----
+----------------
 #### Opening the trace.zip file
 
+----------------
 ````
 mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="show-trace trace.zip"
 ````
-----
+----------------
+
 #### Loading Properties
 
 *default.properties* ==> Consist all the default properties
@@ -47,7 +49,8 @@ TestBase class have overridden properties under **testProperties**
 
 Keep the data sheet csv in testData folder
 Note : Must add columns "TestId" and "env". 'env' column data is to keep environment specific data.
-----
+
+----------------
 
 ##### Load hierarchy is as below:
 1. VM args
@@ -56,12 +59,12 @@ Note : Must add columns "TestId" and "env". 'env' column data is to keep environ
 
 Also to override any property directly place that in VM arguments with -d.
 
--------
+----------------
 #### Run recorder : 
 
 ````mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="codegen https://bonigarcia.dev/selenium-webdriver-java/"````
 
------
+----------------
 
 #### Adding logger:
 
@@ -69,7 +72,9 @@ Also to override any property directly place that in VM arguments with -d.
 
 Changing the log level from mvn command line :
 ````mvn clean install -Dlog.level=DEBUG````
------
+
+----------------
+
 #### Key points to remember
 1. All the properties data is stored **testProperties** which is extended to both test and base page.
 2. Currently, data is automatically loaded. So to load data use BeforeClass method and call **loadTestDataIntoMap** to fetch env specific data
