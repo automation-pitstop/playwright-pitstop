@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.*;
 
+import java.util.Properties;
+
 import static java.lang.invoke.MethodHandles.lookup;
 
 @Listeners({TestListener.class, RetryListener.class})
@@ -20,11 +22,12 @@ public class TestBase {
     //New instance for each test method.
     public BrowserContext context;
     public Page page;
+    public static Properties testProperties;
 
     @BeforeSuite
     static void prepareTestEnv(){
         logger.info("Before Suite called : Preparing the test env");
-
+        testProperties = CoreUtils.testProperties;
     }
 
     @BeforeClass
@@ -45,8 +48,11 @@ public class TestBase {
         logger.info("Before Method called : Creating context and page object");
         context = browser.newContext();
         page = context.newPage();
-        if( StringUtils.isNotBlank(CoreUtils.getOverriddenProperty("default.timeout"))){
-            page.setDefaultTimeout(Double.parseDouble(CoreUtils.getOverriddenProperty("default.timeout")));
+//        if( StringUtils.isNotBlank(CoreUtils.getOverriddenProperty("default.timeout"))){
+//            page.setDefaultTimeout(Double.parseDouble(CoreUtils.getOverriddenProperty("default.timeout")));
+//        }
+        if( StringUtils.isNotBlank(testProperties.getProperty("default.timeout"))){
+            page.setDefaultTimeout(Double.parseDouble(testProperties.getProperty("default.timeout")));
         }
     }
 

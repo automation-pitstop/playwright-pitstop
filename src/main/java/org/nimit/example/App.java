@@ -1,13 +1,9 @@
 package org.nimit.example;
-import com.microsoft.playwright.*;
-import com.microsoft.playwright.options.AriaRole;
 
-import java.nio.file.Paths;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
-import static org.nimit.core.CoreUtils.loadTestDataIntoMap;
+import static org.nimit.core.CoreUtils.getTestDataFromCsvFile;
 
 public class App {
     public static void main(String[] args){
@@ -35,7 +31,7 @@ public class App {
 //            System.out.println("Done");
 //        }
 
-        Map<String, Map<String, String>> dataMap = loadTestDataIntoMap("src/test/resources/data.csv");
+        Map<String, Map<String, String>> dataMap = getTestDataFromCsvFile("src/test/resources/data.csv");
 
         // Print the loaded map
         for (Map.Entry<String, Map<String, String>> entry : dataMap.entrySet()) {

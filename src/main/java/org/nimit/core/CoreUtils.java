@@ -18,8 +18,8 @@ import static java.lang.invoke.MethodHandles.lookup;
 
 public class CoreUtils {
     private static final Logger logger = LoggerFactory.getLogger(lookup().lookupClass());
-
-    public static Properties globalProperties = CoreUtils.loadGlobalProperties();
+    private static Properties localProperties = CoreUtils.loadPropertiesFileData();
+    public static Properties testProperties = CoreUtils.getOverriddenPropertyData();
 
     public static Properties readPropertyFile(String propertiesFileName){
         Properties properties = new Properties();
@@ -47,61 +47,75 @@ public class CoreUtils {
      * @param key Value from the property file to laod
      * @return corresponding value assigned to key
      */
-    public static String getOverriddenProperty(String key) {
+    private static String getOverriddenProperty(String key,Properties localProperties) {
         String finalVal = "";
         // Check command-line arguments
         if(System.getProperties().containsKey(key)){
-            logger.info(String.format("Property overridden using VM args, %s : %s",key,System.getProperty(key)));
+            logger.info(String.format("%s : %s (Property overridden using VM args)",key,System.getProperty(key)));
             return System.getProperty(key);
         }
 
         // Check environment variables
         String envValue = System.getenv(key);
         if (envValue != null) {
-            logger.info(String.format("Property overridden using env variables, %s : %s",key,envValue));
+            logger.info(String.format("%s : %s (Property overridden using env variables)",key,envValue));
             return envValue;
         }
 
         // Check properties file
-        logger.info(String.format("Property loaded from property file, %s : %s",key,globalProperties.getProperty(key)));
-        if(StringUtils.isNotBlank(globalProperties.getProperty(key))){
-            finalVal = globalProperties.getProperty(key);
+        logger.info(String.format("%s : %s (Property coming from property file)",key,localProperties.getProperty(key)));
+        if(StringUtils.isNotBlank(localProperties.getProperty(key))){
+            finalVal = localProperties.getProperty(key);
         }
-//        else{
-//            throw new NoPropertyFoundException("No value found for key : "+ key);
-//        }
         return finalVal;
+    }
+
+    private static Properties getOverriddenPropertyData(){
+        logger.info("===============================================");
+        logger.info("Loading properties file");
+        logger.info("===============================================");
+        Properties updatedPropertyData = new Properties();
+        localProperties.forEach((k,v)->{
+            updatedPropertyData.put((String)k,getOverriddenProperty((String) k,localProperties));
+        });
+        logger.info("===============================================");
+        return updatedPropertyData;
     }
 
     public static String getOverriddenPropertyFromVMandEnv(String key) {
         String finalVal = "";
         // Check command-line arguments
         if(System.getProperties().containsKey(key)){
-            logger.info(String.format("Property overridden using VM args, %s : %s",key,System.getProperty(key)));
+            logger.debug(String.format("%s : %s (Property overridden using VM args)",key,System.getProperty(key)));
             return System.getProperty(key);
         }
 
         // Check environment variables
         String envValue = System.getenv(key);
         if (envValue != null) {
-            logger.info(String.format("Property overridden using env variables, %s : %s",key,envValue));
+            logger.debug(String.format("%s : %s (Property overridden using env variables)",key,envValue));
             return envValue;
         }
 
         return finalVal;
     }
 
-    public static Properties loadGlobalProperties(){
+    private static Properties loadPropertiesFileData(){
         Properties defaultProperties = CoreUtils.readPropertyFile("default.properties");
         Properties envRelatedProperty;
+        //If the VMs have provided 'env' then load that env data in default property
         if(StringUtils.isNotBlank(getOverriddenPropertyFromVMandEnv("env"))){
-//        if(System.getProperties().containsKey("env")){
             String envVal = getOverriddenPropertyFromVMandEnv("env");
-            envRelatedProperty = CoreUtils.readPropertyFile(envVal + ".properties");
-            defaultProperties.putAll(envRelatedProperty);
-            return defaultProperties;
+            try {
+                envRelatedProperty = CoreUtils.readPropertyFile(envVal + ".properties");
+                defaultProperties.putAll(envRelatedProperty);
+                return defaultProperties;
+            }catch (RuntimeException ex){
+                logger.warn(ex.getMessage());
+            }
         }
-      if(defaultProperties.containsKey("env")){
+        //If the default property file have 'env' then load that env data in default property
+        if(defaultProperties.containsKey("env")){
             String envVal = defaultProperties.getProperty("env");
             try {
                 envRelatedProperty = CoreUtils.readPropertyFile(envVal + ".properties");
@@ -121,8 +135,10 @@ public class CoreUtils {
      * @param csvDataFilePath CSV date file path to be loaded
      * @return data map
      */
-    public static Map<String, Map<String, String>> loadTestDataIntoMap(String csvDataFilePath) {
-        String env = getOverriddenProperty("env");
+    public static Map<String, Map<String, String>> getTestDataFromCsvFile(String csvDataFilePath) {
+//        String env = getOverriddenProperty("env",localProperties);
+        String env = testProperties.getProperty("env");
+
         if(StringUtils.isBlank(env)){
             throw new RuntimeException(String.format("ERROR : Data CSV can't be loaded as no 'env' is mentioned. DataCsvPath=%s",csvDataFilePath));
         }
@@ -168,6 +184,4 @@ public class CoreUtils {
 
         return dataMap;
     }
-
-
 }

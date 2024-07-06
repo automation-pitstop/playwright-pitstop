@@ -10,7 +10,6 @@ public class CommandTest extends TestBase {
     void testUrlOpening(){
         TestBase.logger.info("Running the test : testUrlOpening");
         HomePage homePage = HomePage.getInstance(TestBase.playwright, TestBase.browser, page, context);
-        System.out.println(CoreUtils.getOverriddenProperty("key1"));
         homePage.launchUrl()
                 .navigateToWebForm()
                 .setTextInput("HelloWorld")

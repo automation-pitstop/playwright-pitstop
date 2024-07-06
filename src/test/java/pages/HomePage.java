@@ -24,7 +24,8 @@ public class HomePage extends BasePage {
     }
 
     public HomePage launchUrl() {
-        page.navigate(CoreUtils.getOverriddenProperty("url"));
+//        page.navigate(CoreUtils.getOverriddenProperty("url"));
+        page.navigate(testProperties.getProperty("url"));
         if(!StringUtils.containsAnyIgnoreCase(page.url(),"selenium-webdriver-java")){
             throw new WrongPageException("ERROR : Incorrect URL is loaded, current url : "+ page.url());
         }else{

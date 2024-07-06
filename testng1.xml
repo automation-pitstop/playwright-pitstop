@@ -6,8 +6,9 @@
     </listeners>
     <test name="Regression pack">
         <classes>
-<!--            <class name="tests.CommandTest"/>-->
-          <class name="tests.DataTest"/>
+            <!--            <class name="tests.CommandTest"/>-->
+            <class name="tests.DataTest"/>
+            <class name="tests.PropertyLoadTest"/>
         </classes>
     </test>
 </suite>
